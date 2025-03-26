@@ -5,3 +5,7 @@ posicionarse en main.py
 "python main.py"
 
 ejecutar el codigo
+
+---------------------------
+en html,
+ejecutar el codigo mediante live server

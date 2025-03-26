@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gestion de personas</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <!-- formulario para ingresar una nueva persona -->
+    <div>
+        <h2>ingresar nueva persona</h2>
+        <input type="text" id="nombre" placeholder="nombre" required>
+        <input type="text" id="apellido" placeholder="apellido" required>
+        <input type="text" id="dni" placeholder="dni" required>
+        <input type="text" id="telefonos" placeholder="telefonos (separados por comas)" required>
+        <input type="text" id="hijos" placeholder="hijos (separados por comas)" required>
+        <button onclick="ingresarPersona()">ingresar persona</button>
+    </div>
+
+    <!--mostrar los datos -->
+    <div class="resultados">
+        <h2>datos ingresados</h2>
+        <ul id="listaPersonas"></ul>
+    </div>
+
+    <!-- mostrar por dni -->
+    <div class="filtrar-dni">
+        <h2>filtrar por dni</h2>
+        <input type="text" id="searchByDni" placeholder="ingresa el dni">
+        <button onclick="filtrarPorDni()">buscar</button>
+        <p id="resultadoDni"></p>
+    </div>
+</main>
+
+<script>
+    //almacenamiento de las nuevas personas
+    let personas = [];
+
+    //nueva persona
+    function ingresarPersona() {
+        let nombre = document.getElementById("nombre").value;
+        let apellido = document.getElementById("apellido").value;
+        let dni = document.getElementById("dni").value;
+        let telefonos = document.getElementById("telefonos").value.split(",").map(telefono => telefono.trim());
+        let hijos = document.getElementById("hijos").value.split(",").map(hijo => hijo.trim());//trim borra espacios en blanco
+
+        let persona = { nombre, apellido, dni, telefonos, hijos };
+        personas.push(persona);
+        
+        // limpiar los campos del formulario
+        document.getElementById("nombre").value = '';
+        document.getElementById("apellido").value = '';
+        document.getElementById("dni").value = '';
+        document.getElementById("telefonos").value = '';
+        document.getElementById("hijos").value = '';
+        
+        alert("persona ingresada correctamente");
+        datos();
+    }
+
+    function datos() {
+        const listaPersonas = document.getElementById("listaPersonas");
+        listaPersonas.innerHTML = '';
+        
+        personas.forEach(persona => {
+            let li = document.createElement("li");
+            li.innerHTML = `${persona.nombre} ${persona.apellido}, dni: ${persona.dni}, telefonos: ${persona.telefonos.length}, hijos: ${persona.hijos.length}`;
+            listaPersonas.appendChild(li);
+        });
+    }
+
+    //mostrar datos por dni
+    function filtrarPorDni() {
+        let searchByDni = document.getElementById("searchByDni").value;
+        let resultadoDni = document.getElementById("resultadoDni");
+        
+        let personaEncontrada = personas.find(persona => persona.dni === searchByDni);
+        
+        if (personaEncontrada) {
+            resultadoDni.innerHTML = `datos de ${personaEncontrada.nombre} ${personaEncontrada.apellido}: <br> dni: ${personaEncontrada.dni}, telefonos: ${personaEncontrada.telefonos.length}, hijos: ${personaEncontrada.hijos.length}`;
+        } else {
+            resultadoDni.innerHTML = "no se encontro una persona con ese dni.";
+        }
+    }
+</script>
+
+</body>
+</html>
