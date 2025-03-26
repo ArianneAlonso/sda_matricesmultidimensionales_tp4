@@ -1,0 +1,7 @@
+clonar un repositorio,
+abrir la terminal,
+posicionarse en main.py
+
+"python main.py"
+
+ejecutar el codigo
